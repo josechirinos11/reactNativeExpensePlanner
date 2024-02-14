@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { Text, SafeAreaView, View, TextInput, StyleSheet, Pressable} from 'react-native'
 //import { Picker } from '@react-native-picker/picker'
+import ModalDropdown from 'react-native-modal-dropdown';
+import DropDownPicker from 'react-native-dropdown-picker';
 import globalStyles from '../styles'
 
 const FormularioGasto = ({
@@ -16,6 +18,20 @@ const FormularioGasto = ({
     const [ id, setId ] = useState('')
     const [ fecha, setFecha ] = useState('')
 
+    const [open, setOpen] = useState(false);
+    const [value, setValue] = useState(null);
+    const [items, setItems] = useState([
+        {label: 'Ahorro', value: 'ahorro'},
+        {label: 'Comida', value: 'comida'},
+        {label: 'Casa', value: 'casa'},
+        {label: 'Gastos Varios', value: 'gastos'},
+        {label: 'Ocio', value: 'ocio'},
+        {label: 'Salud', value: 'salud'},
+        {label: 'Suscripciones', value: 'suscripciones'},
+    ]);
+
+
+
     useEffect(() => {
         if(gasto?.nombre) {
             setNombre(gasto.nombre)
@@ -30,7 +46,7 @@ const FormularioGasto = ({
         <SafeAreaView style={styles.contenedor}>
             <View style={styles.contenedorBotones}>
                 <Pressable 
-                    onLongPress={() => {
+                    onPress={() => {
                         setModal(false)
                         setGasto({})
                     }}
@@ -42,7 +58,7 @@ const FormularioGasto = ({
                 { !!id && (
                     <Pressable 
                         style={[styles.btn, styles.btnEliminar]}
-                        onLongPress={() => eliminarGasto(id)}
+                        onPress={() => eliminarGasto(id)}
                     >
                         <Text style={styles.btnTexto}>Eliminar</Text>
                     </Pressable> 
@@ -78,6 +94,23 @@ const FormularioGasto = ({
 
                 <View style={styles.campo}>
                     <Text style={styles.label}>Categoría Gasto</Text>
+                    <View
+                style={{
+                    
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    
+                }}>
+                    <DropDownPicker
+                    open={open}
+                    value={categoria}
+                    items={items}
+                    setOpen={setOpen}
+                    setValue={setCategoria}
+                    setItems={setItems}
+                    placeholder={'Seleccione'}
+                />
+                 </View>
                     
                 </View>
 

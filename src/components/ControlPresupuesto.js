@@ -4,7 +4,7 @@ import globalStyles from '../styles'
 import { formatearCantidad } from '../helpers'
 //import CircularProgress from 'react-native-circular-progress-indicator'
 
-const ControlPresupuesto = ({presupuesto, gastos}) => {
+const ControlPresupuesto = ({presupuesto, gastos, resetearApp}) => {
     const [disponible, setDisponible] = useState(0)
     const [gastado, setGastado] = useState(0)
     const [ porcentaje, setPorcentaje ] = useState(0)
@@ -32,7 +32,7 @@ const ControlPresupuesto = ({presupuesto, gastos}) => {
 
             <View style={styles.contenedorTexto}>
                 <Pressable
-                    //onLongPress={resetearApp}
+                    onPress={resetearApp}
                     style={styles.boton}
                 >
                     <Text style={styles.textoBoton}>Reiniciar App</Text>

@@ -13,9 +13,9 @@ import Header from './src/components/Headers';
 import NuevoPresupuesto from './src/components/NuevoPresupuesto';
 import ControlPresupuesto from './src/components/ControlPresupuesto';
 import FormularioGasto from './src/components/FormularioGasto';
-//import ListadoGastos from './src/components/ListadoGastos';
-//import Filtro from './src/components/Filtro';
-//import { generarId } from './src/helpers'
+import ListadoGastos from './src/components/ListadoGastos';
+import Filtro from './src/components/Filtro';
+import { generarId } from './src/helpers'
 
 const App = () => {
   const [ isValidPresupuesto, setIsValidPresupuesto ] = useState(false)
@@ -38,6 +38,7 @@ const App = () => {
   }
 
   const handleGasto = gasto => {
+    
     if([ gasto.nombre, gasto.categoria, gasto.cantidad ].includes('') ) {
       Alert.alert(
         "Error",
@@ -54,6 +55,7 @@ const App = () => {
         gasto.id = generarId()
         gasto.fecha = Date.now()
         setGastos([...gastos, gasto])
+        console.log(gasto)
     }
     setModal(!modal)
   }
@@ -79,9 +81,33 @@ const App = () => {
     )
   }
 
+
+
+  const resetearApp = () => {
+    Alert.alert(
+      'Deseas resetear la app?',
+      'Esto eliminará presupuesto y gastos', 
+      [
+        { text: 'No', style: 'cancel'},
+        { text: 'Si, Eliminar', onPress: async () => {
+          try {
+            await AsyncStorage.clear()
+
+            setIsValidPresupuesto(false)
+            setPresupuesto(0)
+            setGastos([])
+          } catch (error) {
+            console.log(error)
+          }
+        }}
+      ]
+    )
+}
+
+
   return (
     <View style={styles.contenedor}>
-   
+      <ScrollView>
           <View style={styles.header}>
               <Header />
               
@@ -90,7 +116,7 @@ const App = () => {
                 <ControlPresupuesto 
                     presupuesto={presupuesto}
                     gastos={gastos}
-                    //resetearApp={resetearApp}
+                    resetearApp={resetearApp}
                 />
               ) : (
                   <NuevoPresupuesto 
@@ -101,6 +127,29 @@ const App = () => {
               ) }
              
           </View>
+
+          {isValidPresupuesto && (
+            <>
+              <Filtro 
+                filtro={filtro}
+                setFiltro={setFiltro}
+                gastos={gastos}
+                setGastosFiltrados={setGastosFiltrados}
+              />
+
+              <ListadoGastos 
+                gastos={gastos}
+                setModal={setModal}
+                setGasto={setGasto}
+                filtro={filtro}
+                gastosFiltrados={gastosFiltrados}
+              />
+
+            </>
+          )}
+
+</ScrollView>
+
 
           {modal && (
         <Modal
