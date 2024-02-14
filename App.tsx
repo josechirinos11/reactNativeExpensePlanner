@@ -36,7 +36,48 @@ const App = () => {
 
     }
   }
- 
+
+  const handleGasto = gasto => {
+    if([ gasto.nombre, gasto.categoria, gasto.cantidad ].includes('') ) {
+      Alert.alert(
+        "Error",
+        "Todos los campos son obligatorios",
+      )
+      return
+    }
+
+    if(gasto.id) {
+      const gastosActualizados = gastos.map( gastoState => gastoState.id === gasto.id ? gasto : gastoState )
+      setGastos(gastosActualizados)
+    } else {
+        // Añadir el nuevo gasto al state
+        gasto.id = generarId()
+        gasto.fecha = Date.now()
+        setGastos([...gastos, gasto])
+    }
+    setModal(!modal)
+  }
+
+
+
+
+  const eliminarGasto = id => {
+    Alert.alert(
+      '¿Deseas eliminar este gasto?',
+      'Un gasto eliminado no se puede recuperar', 
+      [
+        { text: 'No', style: 'cancel'},
+        { text: 'Si, Eliminar', onPress: () => {
+          
+          const gastosActualizados = gastos.filter( gastoState => gastoState.id !== id  )
+
+          setGastos(gastosActualizados)
+          setModal(!modal)
+          setGasto({})
+        }}
+      ]
+    )
+  }
 
   return (
     <View style={styles.contenedor}>
