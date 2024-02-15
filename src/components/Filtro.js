@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Text, View, StyleSheet } from 'react-native'
-
+import { Picker } from '@react-native-picker/picker'
 import DropDownPicker from 'react-native-dropdown-picker';
 import globalStyles from '../styles'
 
@@ -39,23 +39,21 @@ const Filtro = ({filtro, setFiltro, gastos, setGastosFiltrados, sinFiltro}) => {
             <Text style={styles.label}>Filtrar Gastos</Text>
 
 
-            <View
-                style={{
-                    
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    
-                }}>
-                    <DropDownPicker
-                    open={open}
-                    value={filtro}
-                    items={items}
-                    setOpen={setOpen}
-                    setValue={setFiltro}
-                    setItems={setItems}
-                    placeholder={'Seleccione'}
-                />
-                 </View>
+            <Picker
+                    selectedValue={filtro}
+                    onValueChange={(valor) => {
+                        setFiltro(valor)
+                    }}
+                >
+                    <Picker.Item label="-- Seleccione --" value="" />
+                    <Picker.Item label="Ahorro" value="ahorro" />
+                    <Picker.Item label="Comida" value="comida" />
+                    <Picker.Item label="Casa" value="casa" />
+                    <Picker.Item label="Gastos Varios" value="gastos" />
+                    <Picker.Item label="Ocio" value="ocio" />
+                    <Picker.Item label="Salud" value="salud" />
+                    <Picker.Item label="Suscripciones" value="suscripciones" />
+                </Picker>
 
 
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Text, SafeAreaView, View, TextInput, StyleSheet, Pressable} from 'react-native'
-//import { Picker } from '@react-native-picker/picker'
+import { Picker } from '@react-native-picker/picker'
 import ModalDropdown from 'react-native-modal-dropdown';
 import DropDownPicker from 'react-native-dropdown-picker';
 import globalStyles from '../styles'
@@ -94,23 +94,22 @@ const FormularioGasto = ({
 
                 <View style={styles.campo}>
                     <Text style={styles.label}>Categoría Gasto</Text>
-                    <View
-                style={{
                     
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    
-                }}>
-                    <DropDownPicker
-                    open={open}
-                    value={categoria}
-                    items={items}
-                    setOpen={setOpen}
-                    setValue={setCategoria}
-                    setItems={setItems}
-                    placeholder={'Seleccione'}
-                />
-                 </View>
+                    <Picker
+                        selectedValue={categoria}
+                        onValueChange={(valor) => {
+                            setCategoria(valor)
+                        }}
+                    >
+                        <Picker.Item label="-- Seleccione --" value="" />
+                        <Picker.Item label="Ahorro" value="ahorro" />
+                        <Picker.Item label="Comida" value="comida" />
+                        <Picker.Item label="Casa" value="casa" />
+                        <Picker.Item label="Gastos Varios" value="gastos" />
+                        <Picker.Item label="Ocio" value="ocio" />
+                        <Picker.Item label="Salud" value="salud" />
+                        <Picker.Item label="Suscripciones" value="suscripciones" />
+                    </Picker>
                     
                 </View>
 
