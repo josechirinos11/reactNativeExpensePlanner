@@ -9,7 +9,7 @@ import {
   Modal,
   DeviceEventEmitter 
 } from 'react-native';
-//import AsyncStorage from '@react-native-async-storage/async-storage'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import Header from './src/components/Headers';
 import NuevoPresupuesto from './src/components/NuevoPresupuesto';
 import ControlPresupuesto from './src/components/ControlPresupuesto';
@@ -27,7 +27,64 @@ const App = () => {
   const [ filtro, setFiltro ] = useState('')
   const [ gastosFiltrados, setGastosFiltrados ] = useState([])
 
+  useEffect(() => {
+    const obtenerPresupuestoStorage = async () => {
+        try {
+          const presupuestoStorage = await AsyncStorage.getItem('planificador_presupuesto') ?? 0
+          console.log('obteniendo presupuesto del Storage')
+          console.log(presupuestoStorage)
+          if(presupuestoStorage > 0 ) {
+            setPresupuesto(presupuestoStorage)
+            setIsValidPresupuesto(true)
+          }
+        } catch (error) {
+          console.log(error)
+        }
+    }
+    obtenerPresupuestoStorage()
+  }, [])
 
+  useEffect(() => { 
+    if(isValidPresupuesto) {
+      const guardarPresupuestoStorage = async () => {
+          try {
+            await AsyncStorage.setItem('planificador_presupuesto', presupuesto)
+            console.log('guardando presupuesto del Storage')
+          console.log(presupuesto)
+          } catch (error) {
+            console.log(error)
+          }
+      }
+      guardarPresupuestoStorage()
+    }
+  }, [ isValidPresupuesto ])
+
+  useEffect(() => {
+      const obtenerGastosStorage = async () => {
+        try {
+            const gastosStorage = await AsyncStorage.getItem('planificador_gastos') 
+            console.log('obteniendo gastos del Storage')
+            console.log(gastosStorage)
+            setGastos( gastosStorage ? JSON.parse(gastosStorage) : [] )
+        } catch (error) {
+            console.log(error)
+        }
+      }
+      obtenerGastosStorage()
+  }, [])
+
+  useEffect(() => {
+    const guardarGastosStorage = async () => {
+      try {
+        await AsyncStorage.setItem('planificador_gastos', JSON.stringify(gastos))
+        console.log('guardando gastos del Storage')
+            console.log(gastos)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    guardarGastosStorage();
+  }, [gastos])
 
   const handleNuevoPresupuesto = (presupuesto) => {
     if(Number(presupuesto) > 0) {
@@ -101,11 +158,12 @@ const App = () => {
         { text: 'Si, Eliminar', onPress: async () => {
           try {
             await AsyncStorage.clear()
-            DeviceEventEmitter.emit('RCTRestartApp');
+           // DeviceEventEmitter.emit('RCTRestartApp');
             setIsValidPresupuesto(false)
             setPresupuesto(0)
             setGastos([])
             console.log('reiniciando aplicacion')
+           
           } catch (error) {
             console.log(error)
           }
