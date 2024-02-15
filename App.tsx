@@ -6,7 +6,8 @@ import {
   Alert,
   Pressable,
   Image,
-  Modal
+  Modal,
+  DeviceEventEmitter 
 } from 'react-native';
 //import AsyncStorage from '@react-native-async-storage/async-storage'
 import Header from './src/components/Headers';
@@ -59,6 +60,14 @@ const App = () => {
     }
     setModal(!modal)
   }
+  const sinFiltro = gasto => {
+   
+    if(gasto.id) {
+      const gastosActualizados = gastos.map( gastoState => gastoState.id === gasto.id ? gasto : gastoState )
+      setGastos(gastosActualizados)
+    } 
+    setModal(!modal)
+  }
 
 
 
@@ -92,10 +101,11 @@ const App = () => {
         { text: 'Si, Eliminar', onPress: async () => {
           try {
             await AsyncStorage.clear()
-
+            DeviceEventEmitter.emit('RCTRestartApp');
             setIsValidPresupuesto(false)
             setPresupuesto(0)
             setGastos([])
+            console.log('reiniciando aplicacion')
           } catch (error) {
             console.log(error)
           }
@@ -135,6 +145,7 @@ const App = () => {
                 setFiltro={setFiltro}
                 gastos={gastos}
                 setGastosFiltrados={setGastosFiltrados}
+                sinFiltro={sinFiltro}
               />
 
               <ListadoGastos 

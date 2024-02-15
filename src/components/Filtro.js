@@ -4,13 +4,14 @@ import { Text, View, StyleSheet } from 'react-native'
 import DropDownPicker from 'react-native-dropdown-picker';
 import globalStyles from '../styles'
 
-const Filtro = ({filtro, setFiltro, gastos, setGastosFiltrados}) => {
+const Filtro = ({filtro, setFiltro, gastos, setGastosFiltrados, sinFiltro}) => {
 
 
 
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
     const [items, setItems] = useState([
+        {label: 'Sin Filtro', value: 'sin'},
         {label: 'Ahorro', value: 'ahorro'},
         {label: 'Comida', value: 'comida'},
         {label: 'Casa', value: 'casa'},
@@ -27,6 +28,9 @@ const Filtro = ({filtro, setFiltro, gastos, setGastosFiltrados}) => {
             const gastosFiltrados = gastos.filter( gasto => gasto.categoria === filtro)
 
             setGastosFiltrados(gastosFiltrados)
+        }
+        if(filtro === 'sin') {
+            console.log('holaaaaaaaaaaaaaaa')
         }
     }, [filtro])
 

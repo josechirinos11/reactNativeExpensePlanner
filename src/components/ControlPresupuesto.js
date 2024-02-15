@@ -3,11 +3,19 @@ import { Text, View, StyleSheet, Pressable } from 'react-native'
 import globalStyles from '../styles'
 import { formatearCantidad } from '../helpers'
 //import CircularProgress from 'react-native-circular-progress-indicator'
+import ProgressBarAnimated from 'react-native-progress-bar-animated';
+import Ejemplo from './Ejemplo';
 
 const ControlPresupuesto = ({presupuesto, gastos, resetearApp}) => {
     const [disponible, setDisponible] = useState(0)
     const [gastado, setGastado] = useState(0)
     const [ porcentaje, setPorcentaje ] = useState(0)
+
+
+ 
+
+
+
 
     useEffect(() => {
         const totalGastado = gastos.reduce( (total, gasto) => Number(gasto.cantidad) + total, 0 )
@@ -26,10 +34,16 @@ const ControlPresupuesto = ({presupuesto, gastos, resetearApp}) => {
         setDisponible(totalDisponible)
     }, [gastos])
 
+
+
     return (
         <View style={styles.contenedor}>
             
+            <Ejemplo 
+            porcentaje={porcentaje}
+            />
 
+          
             <View style={styles.contenedorTexto}>
                 <Pressable
                     onPress={resetearApp}
@@ -55,6 +69,7 @@ const ControlPresupuesto = ({presupuesto, gastos, resetearApp}) => {
             </View>
         </View>
     )
+    
 }
 
 const styles = StyleSheet.create({
