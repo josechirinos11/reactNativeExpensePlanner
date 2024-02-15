@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Text, View, StyleSheet, Pressable } from 'react-native'
 import globalStyles from '../styles'
 import { formatearCantidad } from '../helpers'
-//import CircularProgress from 'react-native-circular-progress-indicator'
+import CircularProgress from 'react-native-circular-progress-indicator'
 import ProgressBarAnimated from 'react-native-progress-bar-animated';
 import Ejemplo from './Ejemplo';
 
@@ -38,11 +38,22 @@ const ControlPresupuesto = ({presupuesto, gastos, resetearApp}) => {
 
     return (
         <View style={styles.contenedor}>
-            
-            <Ejemplo 
-            porcentaje={porcentaje}
-            />
-
+         
+ <View style={styles.centrarGrafica}>
+<CircularProgress
+                    value={ porcentaje }
+                    duration={1000}
+                    radius={150}
+                    valueSuffix={'%'}
+                    title='Gastado'
+                    inActiveStrokeColor='#F5F5F5'
+                    inActiveStrokeWidth={20}
+                    activeStrokeColor='#3b82f6'
+                    activeStrokeWidth={20}
+                    titleStyle={{ fontWeight: 'bold', fontSize: 20}}
+                    titleColor='#64748B'
+                />
+</View>
           
             <View style={styles.contenedorTexto}>
                 <Pressable

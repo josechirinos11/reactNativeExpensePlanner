@@ -13,9 +13,12 @@
     "@react-native-async-storage/async-storage": "^1.21.0",
     "react": "18.2.0",
     "react-native": "0.73.2",
+    "react-native-circular-progress-indicator": "^4.4.2",
     "react-native-dropdown-picker": "^5.4.6",
     "react-native-modal-dropdown": "^1.0.2",
-    "react-native-progress-bar-animated": "^1.0.6"
+    "react-native-progress-bar-animated": "^1.0.6",
+    "react-native-reanimated": "^3.7.0",
+    "react-native-svg": "^14.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
