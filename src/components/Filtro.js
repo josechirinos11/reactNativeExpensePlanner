@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, StyleSheet, Dimensions  } from 'react-native'
 import { Picker } from '@react-native-picker/picker'
 import DropDownPicker from 'react-native-dropdown-picker';
 import globalStyles from '../styles'
@@ -20,6 +20,8 @@ const Filtro = ({filtro, setFiltro, gastos, setGastosFiltrados, sinFiltro}) => {
         {label: 'Salud', value: 'salud'},
         {label: 'Suscripciones', value: 'suscripciones'},
     ]);
+
+    const anchoFiltro = Dimensions.get('window')*0.5
 
     useEffect(() => {
         if(filtro === '') {
@@ -66,7 +68,9 @@ const styles = StyleSheet.create({
     contenedor: {
         ...globalStyles.contenedor,
         transform: [{ translateY: 0 }],
-        marginTop: 80
+        marginTop: 80,
+       
+       
     },
     label: {
         fontSize: 22,

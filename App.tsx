@@ -31,8 +31,8 @@ const App = () => {
     const obtenerPresupuestoStorage = async () => {
         try {
           const presupuestoStorage = await AsyncStorage.getItem('planificador_presupuesto') ?? 0
-          console.log('obteniendo presupuesto del Storage')
-          console.log(presupuestoStorage)
+         // console.log('obteniendo presupuesto del Storage')
+         // console.log(presupuestoStorage)
           if(presupuestoStorage > 0 ) {
             setPresupuesto(presupuestoStorage)
             setIsValidPresupuesto(true)
@@ -49,8 +49,8 @@ const App = () => {
       const guardarPresupuestoStorage = async () => {
           try {
             await AsyncStorage.setItem('planificador_presupuesto', presupuesto)
-            console.log('guardando presupuesto del Storage')
-          console.log(presupuesto)
+    //        console.log('guardando presupuesto del Storage')
+     //     console.log(presupuesto)
           } catch (error) {
             console.log(error)
           }
@@ -63,8 +63,8 @@ const App = () => {
       const obtenerGastosStorage = async () => {
         try {
             const gastosStorage = await AsyncStorage.getItem('planificador_gastos') 
-            console.log('obteniendo gastos del Storage')
-            console.log(gastosStorage)
+        //    console.log('obteniendo gastos del Storage')
+      //      console.log(gastosStorage)
             setGastos( gastosStorage ? JSON.parse(gastosStorage) : [] )
         } catch (error) {
             console.log(error)
@@ -77,8 +77,8 @@ const App = () => {
     const guardarGastosStorage = async () => {
       try {
         await AsyncStorage.setItem('planificador_gastos', JSON.stringify(gastos))
-        console.log('guardando gastos del Storage')
-            console.log(gastos)
+      //  console.log('guardando gastos del Storage')
+      //      console.log(gastos)
       } catch (error) {
         console.log(error)
       }
@@ -113,7 +113,7 @@ const App = () => {
         gasto.id = generarId()
         gasto.fecha = Date.now()
         setGastos([...gastos, gasto])
-        console.log(gasto)
+       // console.log(gasto)
     }
     setModal(!modal)
   }
@@ -162,7 +162,7 @@ const App = () => {
             setIsValidPresupuesto(false)
             setPresupuesto(0)
             setGastos([])
-            console.log('reiniciando aplicacion')
+        //    console.log('reiniciando aplicacion')
            
           } catch (error) {
             console.log(error)
